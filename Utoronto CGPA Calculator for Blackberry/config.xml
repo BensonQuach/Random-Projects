@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright 2012 Benson Quach.
+ *
+-->
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:rim="http://www.blackberry.com/ns/widgets"
+        version="1.0.0.0"  id="Utoronto CGPA Calculator" xml:lang="en">
+  <author rim:copyright="Copyright 2012 Benson Quach">Benson Quach</author>
+  <name>Utoronto CGPA Calculator</name>
+  <description>This program calculates the cumulative grade point average (CGPA) for the provided courses given their respective marks and credit value.</description>
+
+  <access uri="http://ajax.googleapis.com" subdomains="true"/>
+  <content src="index.html"/>
+  <icon src="icon.png"/>
+  <feature id="blackberry.app"/>
+
+</widget>

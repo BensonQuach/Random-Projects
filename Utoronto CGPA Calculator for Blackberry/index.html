@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Utoronto GPA Calculator</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+	<!-- Webworks JS must be loaded before any Dojo  -->
+	<!-- 
+	  Include BlackBerry 10 WebWorks JavaScript framework file.
+	  When doing an SDK upgrade, always make sure you grab the latest from the SDK/Framework/clientFiles folder.
+	-->
+	<script src="js/webworks-1.0.3.8.js"></script> 
+	
+	<!-- async mode must be included BEFORE the dojo loader (dojo.js) -->
+	<script data-dojo-config="async:true" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css"/>
+	
+	<script src="js/utoronto.js"></script>
+
+</head>
+<body class="claro">
+
+<!-- Main Page -->
+
+		<div id="home" data-dojo-type="dojox.mobile.View">
+			<div data-dojo-type="dojox.mobile.Heading" data-dojo-props='label:"Utoronto CGPA"'>
+				<span data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'about'">About</span>
+			</div>
+		
+			<div id="courseView" dojoType="dojox.mobile.ScrollableView" selected="true">
+		
+				<ul id="courseList" data-dojo-type="dojox.mobile.RoundRectList">
+
+				</ul>
+				
+				<ul data-dojo-type="dojox.mobile.RoundRectList">
+					<li id="CGPA" dojoType="dojox.mobile.ListItem" rightText="0.0"><i>Cumulative GPA:</i> </li>
+				</ul>
+			</div>
+	
+			<h1 data-dojo-type="dojox.mobile.Heading" fixed='bottom'>
+				<span data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'createOverlay'" onClick='onClickCreate()'>Add Course</span> 
+				<span data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'deleteRecordOverlay'" onClick="onClickEdit()">Edit List</span>
+			</h1>
+			
+		</div>
+
+	
+<!-- createOverlay Page -->
+		<div id="createOverlay" data-dojo-type="dojox.mobile.View">
+		
+			<div data-dojo-type="dojox.mobile.Heading" data-dojo-props='label:"New Course Entry"'>
+			</div>
+	
+			<div id="createView" dojoType="dojox.mobile.ScrollableView" selected="true">
+				<div dojotype="dojox.mobile.RoundRect" shadow="true" class="mblRoundRect mblShadow" id="dojox_mobile_RoundRect_4" style="" widgetid="dojox_mobile_RoundRect_4">			
+					
+					<table width="100%">
+						<tbody>
+							<tr>
+								<td valign="top"><span class="bold">Course Code:</span></td>
+								<td align="right"><input dojotype="dojox.mobile.TextBox" maxlength="9" selectonclick="true" 
+								placeholder="CSC108" class="mblTextBox" tabindex="0" id="courseCode" style="" widgetid="courseCode" value=""></td>
+							</tr>
+							<tr>
+								<td valign="top"><span class="bold">Credit:</span></td>
+								<td align="right"><input dojotype="dojox.mobile.TextBox" maxlength="4" selectonclick="true" 
+								placeholder="0.5" class="mblTextBox" tabindex="0" id="credit" style="" widgetid="credit" value=""></td>
+							</tr>
+							<tr>
+								<td valign="top"><span class="bold">Mark:</span></td>
+								<td align="right"><input dojotype="dojox.mobile.TextBox" maxlength="3" selectonclick="true" 
+								placeholder="100" class="mblTextBox" tabindex="0" id="mark" style="" widgetid="mark" value=""></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props='shadow:true'>
+					
+						<table width="100%" style="font-size: 14px">
+							<tbody>
+								<tr>
+									<td valign="top"><span class="bold">Course Code:</span></td>
+									<td align="right">Any text representing your course code</td>
+								</tr>
+								<tr>
+									<td valign="top"><span class="bold">Credit:</span></td>
+									<td align="right">A float value from 0.0 to 1.0 inclusive</td>
+								</tr>
+								<tr>
+									<td valign="top"><span class="bold">Mark:</span></td>
+									<td align="right">An integer value from 0 to 100 </td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			
+			<h1 id="createToolBar" data-dojo-type="dojox.mobile.Heading" fixed='bottom'>
+				<span id="confirm" data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'#', onClick:addCourse">Confirm</span> 
+				<span id="cancel" data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'home'">Cancel</span> 
+			</h1>
+		</div>
+	
+<!-- deleteRecordOverlay Page -->
+		<div id="deleteRecordOverlay" data-dojo-type="dojox.mobile.View">
+			<div data-dojo-type="dojox.mobile.Heading" data-dojo-props='label:"Select Courses to Delete"'>
+			</div>
+			
+			<div id="deleteView" dojoType="dojox.mobile.ScrollableView" selected="true">
+			
+				<ul id="deleteList" data-dojo-type="dojox.mobile.RoundRectList"	data-dojo-props='select:"multiple"'>
+				</ul>
+				
+			</div>
+			
+			<h1 data-dojo-type="dojox.mobile.Heading" fixed='bottom'>
+				<span id="delete" data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="" onClick="onClickDelete()">Delete</span> 
+				<span data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'home'">Cancel</span> 
+			</h1>
+		</div>
+	
+<!-- About the app -->
+		<div id="about" data-dojo-type="dojox.mobile.View">
+		
+			<div data-dojo-type="dojox.mobile.Heading"
+				data-dojo-props='label:"About"'>
+				<span data-dojo-type="dojox.mobile.ToolBarButton"
+					data-dojo-props="moveTo:'home'">Home</span>
+			</div>
+			
+			<div id="aboutView" dojoType="dojox.mobile.ScrollableView" selected="true">
+				<ul data-dojo-type="dojox.mobile.RoundRectList">
+					<li data-dojo-type="dojox.mobile.ListItem" rightText="Benson Quach">Author:
+					</li>
+					<li data-dojo-type="dojox.mobile.ListItem"
+						rightText="Utoronto GPA Calculator">Name:</li>
+					<li data-dojo-type="dojox.mobile.ListItem" rightText="1.0">Version:
+					</li>
+					<li data-dojo-type="dojox.mobile.ListItem"
+						rightText="Copyright &copy; 2012 Benson Quach">Copyright:</li>
+				</ul>
+				
+				<div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props='shadow:true'>
+						<b>Description: </b><br/>
+						This program calculates the cumulative grade point average (CGPA) for the provided courses given their respective marks and credit value.
+				</div>
+			</div>
+			
+			<h1 data-dojo-type="dojox.mobile.Heading" fixed='bottom'>
+			</h1>
+		</div>
+
+
+<!-- Loading screen to ensure the page is formatted and all resources have been loaded -->
+<div id="loadingScreen" style="position:absolute;left:0px;top:0px;width:100%;height:100%;background-color:#FFFFFF;z-index:999;display:block;text-align:center;">Loading...</div>
+
+</body>
+</html>
